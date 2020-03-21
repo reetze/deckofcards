@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
 
-
-
   # Routes for the Game resource:
 
   # CREATE
   post("/insert_game", { :controller => "games", :action => "create" })
+  get("/create_or_join", { :controller => "games", :action => "create_or_join" })
           
   # READ
   get("/games", { :controller => "games", :action => "index" })
-  
   get("/games/:path_id", { :controller => "games", :action => "show" })
   
   # UPDATE

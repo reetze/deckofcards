@@ -1,4 +1,9 @@
 class GamesController < ApplicationController
+  
+  def create_or_join
+    render({ :template => "games/create_or_join.html.erb" })
+  end
+  
   def index
     @games = Game.all.order({ :created_at => :desc })
 
