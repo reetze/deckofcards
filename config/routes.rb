@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   # ------------------------------
 
   # SIGN IN FORM
+  get("/", { :controller => "player_sessions", :action => "new_session_form" })
   get("/player_sign_in", { :controller => "player_sessions", :action => "new_session_form" })
   # AUTHENTICATE AND STORE COOKIE
   post("/player_verify_credentials", { :controller => "player_sessions", :action => "create_cookie" })
