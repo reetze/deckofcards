@@ -13,10 +13,19 @@
         <label for="name_box">Name</label>
         <input id="name_box" name="query_name" value="<%= @current_player.name %>">
       </div>
+
+<hr>
+
       <div>
         <label for="image_box">Image</label>
-        <input id="image_box" name="query_image" value="<%= @current_player.image %>">
+        <input id="image_box" name="query_image" value="<%= @current_player.image %>" style="width:100%">
       </div>
+
+      <div>
+        <p>Current image:</p>
+        <img src="<%= @current_player.image %>" height=100>
+      </div>
+      <hr>
 
       <div>
         <label for="password_box">Password</label>
