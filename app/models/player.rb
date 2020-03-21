@@ -9,6 +9,7 @@
 #  password_digest :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  current_game_id :integer
 #
 
 class Player < ApplicationRecord
