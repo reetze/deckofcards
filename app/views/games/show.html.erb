@@ -1,0 +1,86 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Game #<%= @game.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/games" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_game/<%= @game.id %>" class="btn btn-block btn-outline-secondary">
+          Delete game
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Passcode
+      </dt>
+      <dd>
+        <%= @game.passcode %>
+      </dd>
+
+      <dt>
+        Creator
+      </dt>
+      <dd>
+        <%= @game.creator_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@game.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@game.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit game
+    </h2>
+
+    <form action="/modify_game/<%= @game.id %>"  method="post" >
+      <div class="form-group">
+        <label for="passcode_box">
+          Passcode
+        </label>
+
+        <input type="text" id="passcode_box" name="query_passcode" class="form-control" value="<%= @game.passcode %>">
+      </div>
+
+      <div class="form-group">
+        <label for="creator_id_box">
+          Creator
+        </label>
+
+        <input type="text" id="creator_id_box" name="query_creator_id" class="form-control" value="<%= @game.creator_id %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update game
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
