@@ -4,9 +4,11 @@
 
     <form action="/join_game" method="post">
       <div class="form-group">
-        <label for="passcode_box">Passcode</label>
-        <input type="text" id="passcode_box" name="query_passcode" class="form-control" >
+        <label for="passcode_box">Enter the game passcode</label>
+        <input type="text" id="passcode_box" name="query_passcode" class="form-control">
       </div>
+
+      <button class="btn btn-block btn-outline-secondary" style = "background-color:#35654d; color:white;">Join game</button>
     </form>
 
   </div>
@@ -17,5 +19,14 @@
 <div class="row mb-3">
   <div class="col-md-12">
     <h1>Create a new game</h1>
+
+    <form action="/insert_game" method="post">
+      <div class="form-group">
+        <label for="passcode_box">Create a game passcode to share with the other players</label>
+        <input type="text" id="passcode_box" name="query_passcode" class="form-control">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary" style = "background-color:#35654d; color:white;">Create game</button>
+    </form>
   </div>
 </div>
