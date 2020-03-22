@@ -1,4 +1,13 @@
 class CardsController < ApplicationController
+  
+  def change_deck
+    Card.all.each do |the_card|
+      the_card.back_image = params.fetch("query_back_image")
+      the_card.save
+    end
+    redirect_to("/before_we_begin")
+  end  
+  
   def index
     @cards = Card.all.order({ :created_at => :desc })
 

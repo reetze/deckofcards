@@ -60,11 +60,18 @@
             <p>Current image:</p>
             <img src="<%= Card.first.back_image %>" height=200>
           </div>
-          <form action="/modify_player" method="post">
-            <div>
-              <label for="image_box">New image</label>
-              <input id="image_box" name="query_image" value="<%= @current_player.image %>" style="width:100%">
-            </div>
+
+          <%if @current_player.id == @current_game.creator_id%>
+            <form action="/change_deck_image" method="post">
+              <div>
+                <label for="image_box">New image</label>
+                <input id="image_box" name="query_back_image" value="<%= @current_player.image %>" style="width:100%">
+              </div>
+              <div style="margin-top:5px">
+                <button style="background-color:#5BB2D7">Update deck image</button>
+              </div>
+            </form>
+          <%end%>
 
       <%end%>
     </div>

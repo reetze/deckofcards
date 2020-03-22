@@ -4,6 +4,7 @@ Rails.application.routes.draw do
           
   # READ
   get("/cards", { :controller => "cards", :action => "index" })
+  post("/change_deck_image", { :controller => "cards", :action => "change_deck" })
   
 
   #------------------------------
