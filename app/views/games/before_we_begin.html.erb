@@ -1,3 +1,5 @@
+<body style="background-color:#35654d; color:white;">
+
 <div class="row mb-3">
   <div class="col-md-12">
     <div>
@@ -12,15 +14,19 @@
 
     <ol>
       <li>House rule: Don't be a dick. Successfully cheating is not an accomplishment.</li>
-      <li>Set your browser to auto-refresh</li>
+      <li>Set your browser to auto-refresh
         <ul>
           <li>
             Add an auto-refresh extension to your browser (<a href="https://chrome.google.com/webstore/detail/auto-refresh/ifooldnmmcmlbdennkpdnlnbgbmfalko?hl=en" target="_blank">for Chrome users</a>)
           </li>
           <li>The linked auto-refresh extension for Chrome will only refresh this tab</li>
           <li>Set your refresh for every 15 seconds, or faster if you prefer</li>
-        <ul>
+        </ul>
+      </li>
+      <li>Let me know what's not working well</li>
     </ol>
+
+    <p>Erica, Master of Games</p>
 
     <br>
 
@@ -28,7 +34,7 @@
       <% if session.fetch(:game_id) != @current_player.current_game_id%>
         <h4>Ready to play?</h4>
         <form action="/join_the_game" method="post">
-          <button>Join the room</button>
+          <button style = "background-color:red;">Join the room</button>
         </form>
       <%else%>
         <h4>Who's at the table</h4>
@@ -52,3 +58,5 @@
 </div>
 
 <br>
+
+</body>
