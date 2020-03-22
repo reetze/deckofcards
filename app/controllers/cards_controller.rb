@@ -17,12 +17,8 @@ class CardsController < ApplicationController
     @card.suit = params.fetch("query_suit")
     @card.name = params.fetch("query_name")
     @card.value = params.fetch("query_value")
-    @card.current_location = params.fetch("query_current_location")
-    @card.deck_order = params.fetch("query_deck_order")
-    @card.hand_player_id = params.fetch("query_hand_player_id")
     @card.back_image = params.fetch("query_back_image")
     @card.face_image = params.fetch("query_face_image")
-    @card.current_game_id = params.fetch("query_current_game_id")
 
     if @card.valid?
       @card.save

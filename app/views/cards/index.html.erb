@@ -1,15 +1,8 @@
 <div class="row mb-3">
-  <div class="col-md-12">
-    <h1>
-      List of all cards
-    </h1>
-  </div>
-</div>
-
-<hr>
-
-<div class="row mb-3">
   <div class="col-md-8 offset-md-2">
+
+
+
     <h2>
       Add a new card
     </h2>
@@ -20,7 +13,7 @@
           Suit
         </label>
 
-        <input type="text" id="suit_box" name="query_suit" class="form-control">
+        <input type="text" id="suit_box" name="query_suit" class="form-control" value="spades">
       </div>
 
       <div class="form-group">
@@ -39,37 +32,7 @@
         <input type="text" id="value_box" name="query_value" class="form-control">
       </div>
 
-      <div class="form-group">
-        <label for="current_location_box">
-          Current location
-        </label>
 
-        <input type="text" id="current_location_box" name="query_current_location" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="deck_order_box">
-          Deck order
-        </label>
-
-        <input type="text" id="deck_order_box" name="query_deck_order" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="hand_player_id_box">
-          Hand player
-        </label>
-
-        <input type="text" id="hand_player_id_box" name="query_hand_player_id" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="back_image_box">
-          Back image
-        </label>
-
-        <input type="text" id="back_image_box" name="query_back_image" class="form-control">
-      </div>
 
       <div class="form-group">
         <label for="face_image_box">
@@ -79,12 +42,13 @@
         <input type="text" id="face_image_box" name="query_face_image" class="form-control">
       </div>
 
+
       <div class="form-group">
-        <label for="current_game_id_box">
-          Current game
+        <label for="back_image_box">
+          
         </label>
 
-        <input type="text" id="current_game_id_box" name="query_current_game_id" class="form-control">
+        <input type="hidden" id="back_image_box" name="query_back_image" class="form-control" value="https://terrigen-cdn-dev.marvel.com/content/prod/1x/theavengers_lob_crd_03.jpg">
       </div>
 
       <button class="btn btn-block btn-outline-secondary">
@@ -182,11 +146,11 @@
         </td>
 
         <td>
-          <%= card.back_image %>
+          <img src="<%= card.back_image %>" height=100>
         </td>
 
         <td>
-          <%= card.face_image %>
+          <img src="<%= card.face_image %>" height=100>
         </td>
 
         <td>
