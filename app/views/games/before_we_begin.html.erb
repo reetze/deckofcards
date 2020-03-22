@@ -1,5 +1,8 @@
 <body style="background-color:#35654d; color:white;">
 
+<%@current_game = Game.where({ :id => session.fetch(:game_id)}).at(0)%>
+<%@current_player = Player.where({ :id => session.fetch(:player_id)}).at(0)%>
+
 <div class="row mb-3">
   <div class="col-md-12">
     <div>
@@ -23,6 +26,7 @@
           <li>Set your refresh for every 15 seconds, or faster if you prefer</li>
         </ul>
       </li>
+      <li>Unsaved active games will be deleted after 48 hours</li>
       <li>Let me know what's not working well</li>
     </ol>
 
@@ -31,25 +35,26 @@
     <br>
 
     <div>
-      <% if session.fetch(:game_id) != @current_player.current_game_id%>
-        <h4>Ready to play?</h4>
+      <% if @current_player.current_game_id != session.fetch(:game_id)%>
+        <h4>This game was created by <%= @current_game.createdby %>. Ready to play?</h4>
         <form action="/take_a_seat" method="post">
           <button style = "background-color:red; color:white;">Take a seat at the table</button>
         </form>
       <%else%>
         <h4>Who's at the table</h4>
           <div class="row mb-3">
-          <div class="col-md-12">
-            <table class="table">
-              <% @game.players_in.each do |player| %>
-                <tr>
-                  <td><img src="<%= player.image %>" height=100></td>
-                  <td><%=player.name%></td>
-                </tr>
-              <%end%>
-            </table>
+            <div class="col-md-6">
+              <table class="table" border=1 bordercolor=white>
+                <% @current_game.theplayers.each do |player| %>
+                  <tr>
+                    <td style = "color:white"><%=player.name%></td>
+                    <td><img src="<%= player.image %>" height=100></td>
+                  </tr>
+                <%end%>
+              </table>
+            </div>
           </div>
-          </div>
+        <h4>Pick your deck</h4>
 
       <%end%>
     </div>

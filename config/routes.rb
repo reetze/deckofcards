@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # CREATE
   post("/insert_game", { :controller => "games", :action => "create" })
   get("/create_or_join", { :controller => "games", :action => "create_or_join" })
+  get("/", { :controller => "games", :action => "create_or_join" })
   post("/take_a_seat", { :controller => "games", :action => "sit_down" })
           
   # READ

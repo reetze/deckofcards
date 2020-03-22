@@ -1,9 +1,11 @@
 class GamesController < ApplicationController
   
   def sit_down
+    @current_player = Player.where({ :id => session.fetch(:player_id)}).at(0)
     @current_player.current_game_id = session.fetch(:game_id)
-    @game = Game.where({ :id => @current_player.current_game_id}).at(0)
-    render({ :template => "games/before_we_begin.html.erb" })
+    @current_player.save
+    
+    redirect_to("/before_we_begin")
   end
 
   def pre_game
@@ -47,6 +49,7 @@ class GamesController < ApplicationController
     
     if @game.valid?
       @game.save
+      session.store(:game_id, @game.id)
       redirect_to("/before_we_begin", { :alert => "Game created successfully." })
     else
       redirect_to("/create_or_join", { :notice => "Game failed to create successfully." })
