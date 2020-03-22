@@ -35,8 +35,13 @@
     <br>
 
     <div>
+      <%if @current_player.id == @current_game.creator_id%>
+        <%name= "you"%>
+      <%else%>
+        <%name = @current_game.createdby%>
+      <%end%>
       <% if @current_player.current_game_id != session.fetch(:game_id)%>
-        <h4>This game was created by <%= @current_game.createdby %>. Ready to play?</h4>
+        <h4>This game was created by <%= name %>. Ready to play?</h4>
         <form action="/take_a_seat" method="post">
           <button style = "background-color:red; color:white;">Take a seat at the table</button>
         </form>
@@ -80,8 +85,17 @@
           <a href="/start_the_game" class="btn btn-block btn-outline-secondary" style="
               background-color:red;
               color:white;
-              font-size:20px;">
+              font-size:30px;">
             The gang's all here, let's begin!
+          </a>
+        </div>
+
+        <br>
+
+        <div style="">
+          <a href="/delete_game/<%=@current_game.id%>" class="btn btn-block btn-outline-secondary" style="
+              background-color:#BCC5C9;">
+            Never mind, delete this game.
           </a>
         </div>
 

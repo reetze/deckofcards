@@ -75,6 +75,15 @@ class GamesController < ApplicationController
     the_id = params.fetch("path_id")
     @game = Game.where({ :id => the_id }).at(0)
 
+    @game.theplayers.each |the_player|
+      the_player.current_game_id = nil
+    end
+
+    Card.all.each do |the_card|
+      the_card.back_image = "https://terrigen-cdn-dev.marvel.com/content/prod/1x/theavengers_lob_crd_03.jpg"
+      the_card.save
+    end
+
     @game.destroy
 
     redirect_to("/games", { :notice => "Game deleted successfully."} )
