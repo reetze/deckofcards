@@ -1,6 +1,19 @@
 class GamesController < ApplicationController
   
   def create_or_join
+    the_passcode = params.fetch("query_passcode")
+    @game = Game.where({ :passcode => the_passcode}).at(0)
+
+    if @game == nil
+      redirect_to("/create_or_join", { :alert => "Incorrect passcode." })
+    else
+      session.store(:game_id, @game.id)
+    
+      render({ :template => "games/before_we_begin.html.erb" })
+    end
+  end
+  
+  def create_or_join
     render({ :template => "games/create_or_join.html.erb" })
   end
   
