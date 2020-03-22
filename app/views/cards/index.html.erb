@@ -1,0 +1,214 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      List of all cards
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Add a new card
+    </h2>
+
+    <form action="/insert_card" method="post">
+      <div class="form-group">
+        <label for="suit_box">
+          Suit
+        </label>
+
+        <input type="text" id="suit_box" name="query_suit" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="value_box">
+          Value
+        </label>
+
+        <input type="text" id="value_box" name="query_value" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="current_location_box">
+          Current location
+        </label>
+
+        <input type="text" id="current_location_box" name="query_current_location" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="deck_order_box">
+          Deck order
+        </label>
+
+        <input type="text" id="deck_order_box" name="query_deck_order" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="hand_player_id_box">
+          Hand player
+        </label>
+
+        <input type="text" id="hand_player_id_box" name="query_hand_player_id" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="back_image_box">
+          Back image
+        </label>
+
+        <input type="text" id="back_image_box" name="query_back_image" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="face_image_box">
+          Face image
+        </label>
+
+        <input type="text" id="face_image_box" name="query_face_image" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="current_game_id_box">
+          Current game
+        </label>
+
+        <input type="text" id="current_game_id_box" name="query_current_game_id" class="form-control">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Create card
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Suit
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Value
+        </th>
+
+        <th>
+          Current location
+        </th>
+
+        <th>
+          Deck order
+        </th>
+
+        <th>
+          Hand player
+        </th>
+
+        <th>
+          Back image
+        </th>
+
+        <th>
+          Face image
+        </th>
+
+        <th>
+          Current game
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @cards.each do |card| %>
+      <tr>
+        <td>
+          <%= card.id %>
+        </td>
+
+        <td>
+          <%= card.suit %>
+        </td>
+
+        <td>
+          <%= card.name %>
+        </td>
+
+        <td>
+          <%= card.value %>
+        </td>
+
+        <td>
+          <%= card.current_location %>
+        </td>
+
+        <td>
+          <%= card.deck_order %>
+        </td>
+
+        <td>
+          <%= card.hand_player_id %>
+        </td>
+
+        <td>
+          <%= card.back_image %>
+        </td>
+
+        <td>
+          <%= card.face_image %>
+        </td>
+
+        <td>
+          <%= card.current_game_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(card.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(card.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/cards/<%= card.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

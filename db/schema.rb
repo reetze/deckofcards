@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_153556) do
+ActiveRecord::Schema.define(version: 2020_03_22_152750) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -36,6 +36,20 @@ ActiveRecord::Schema.define(version: 2020_03_21_153556) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.string "suit"
+    t.string "name"
+    t.integer "value"
+    t.string "current_location"
+    t.integer "deck_order"
+    t.integer "hand_player_id"
+    t.string "back_image"
+    t.string "face_image"
+    t.integer "current_game_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "games", force: :cascade do |t|

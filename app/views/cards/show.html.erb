@@ -1,0 +1,191 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Card #<%= @card.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/cards" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_card/<%= @card.id %>" class="btn btn-block btn-outline-secondary">
+          Delete card
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Suit
+      </dt>
+      <dd>
+        <%= @card.suit %>
+      </dd>
+
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @card.name %>
+      </dd>
+
+      <dt>
+        Value
+      </dt>
+      <dd>
+        <%= @card.value %>
+      </dd>
+
+      <dt>
+        Current location
+      </dt>
+      <dd>
+        <%= @card.current_location %>
+      </dd>
+
+      <dt>
+        Deck order
+      </dt>
+      <dd>
+        <%= @card.deck_order %>
+      </dd>
+
+      <dt>
+        Hand player
+      </dt>
+      <dd>
+        <%= @card.hand_player_id %>
+      </dd>
+
+      <dt>
+        Back image
+      </dt>
+      <dd>
+        <%= @card.back_image %>
+      </dd>
+
+      <dt>
+        Face image
+      </dt>
+      <dd>
+        <%= @card.face_image %>
+      </dd>
+
+      <dt>
+        Current game
+      </dt>
+      <dd>
+        <%= @card.current_game_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@card.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@card.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit card
+    </h2>
+
+    <form action="/modify_card/<%= @card.id %>"  method="post" >
+      <div class="form-group">
+        <label for="suit_box">
+          Suit
+        </label>
+
+        <input type="text" id="suit_box" name="query_suit" class="form-control" value="<%= @card.suit %>">
+      </div>
+
+      <div class="form-group">
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" class="form-control" value="<%= @card.name %>">
+      </div>
+
+      <div class="form-group">
+        <label for="value_box">
+          Value
+        </label>
+
+        <input type="text" id="value_box" name="query_value" class="form-control" value="<%= @card.value %>">
+      </div>
+
+      <div class="form-group">
+        <label for="current_location_box">
+          Current location
+        </label>
+
+        <input type="text" id="current_location_box" name="query_current_location" class="form-control" value="<%= @card.current_location %>">
+      </div>
+
+      <div class="form-group">
+        <label for="deck_order_box">
+          Deck order
+        </label>
+
+        <input type="text" id="deck_order_box" name="query_deck_order" class="form-control" value="<%= @card.deck_order %>">
+      </div>
+
+      <div class="form-group">
+        <label for="hand_player_id_box">
+          Hand player
+        </label>
+
+        <input type="text" id="hand_player_id_box" name="query_hand_player_id" class="form-control" value="<%= @card.hand_player_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="back_image_box">
+          Back image
+        </label>
+
+        <input type="text" id="back_image_box" name="query_back_image" class="form-control" value="<%= @card.back_image %>">
+      </div>
+
+      <div class="form-group">
+        <label for="face_image_box">
+          Face image
+        </label>
+
+        <input type="text" id="face_image_box" name="query_face_image" class="form-control" value="<%= @card.face_image %>">
+      </div>
+
+      <div class="form-group">
+        <label for="current_game_id_box">
+          Current game
+        </label>
+
+        <input type="text" id="current_game_id_box" name="query_current_game_id" class="form-control" value="<%= @card.current_game_id %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update card
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
