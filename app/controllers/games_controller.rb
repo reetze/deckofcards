@@ -9,7 +9,13 @@ class GamesController < ApplicationController
   end
 
   def pre_game
-    render({ :template => "games/before_we_begin.html.erb" })
+    this_game = Game.where({ :id => session.fetch(:game_id)}).at(0)
+    if this_game
+      render({ :template => "games/before_we_begin.html.erb" })
+    else
+      redirect_to("/create_or_join", { :alert => "The game was deleted." })
+    end
+    
   end
 
   def join
@@ -75,7 +81,7 @@ class GamesController < ApplicationController
     the_id = params.fetch("path_id")
     @game = Game.where({ :id => the_id }).at(0)
 
-    @game.theplayers.each |the_player|
+    @game.theplayers.each do |the_player|
       the_player.current_game_id = nil
     end
 
@@ -86,6 +92,7 @@ class GamesController < ApplicationController
 
     @game.destroy
 
-    redirect_to("/games", { :notice => "Game deleted successfully."} )
+    redirect_to("/create_or_join", { :notice => "Game deleted successfully."} )
   end
+
 end
