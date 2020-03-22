@@ -48,6 +48,15 @@ class GamesController < ApplicationController
     render({ :template => "games/show.html.erb" })
   end
 
+  def table_top
+    game_id = params.fetch("game_id")
+    @game = Game.where({:id => the_id }).at(0)
+    player_id = Player.where({ :id => session.fetch(:player_id)}).at(0).id
+    @cards = Card.where.not({:deck_order => nil})
+
+    render({ :template => "games/table_top.html.erb" })
+  end
+
   def create
     @game = Game.new
     @game.passcode = params.fetch("query_passcode")

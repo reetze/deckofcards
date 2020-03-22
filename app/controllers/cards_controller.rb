@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-  
+
   def change_deck
     Card.all.each do |the_card|
       the_card.back_image = params.fetch("query_back_image")
