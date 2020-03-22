@@ -56,6 +56,16 @@
           </div>
         <h4>Pick your deck</h4>
 
+          <div>
+            <p>Current image:</p>
+            <img src="<%= Card.first.back_image %>" height=200>
+          </div>
+          <form action="/modify_player" method="post">
+            <div>
+              <label for="image_box">New image</label>
+              <input id="image_box" name="query_image" value="<%= @current_player.image %>" style="width:100%">
+            </div>
+
       <%end%>
     </div>
 

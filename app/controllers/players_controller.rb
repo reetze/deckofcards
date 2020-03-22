@@ -39,7 +39,7 @@ class PlayersController < ApplicationController
     if @player.valid?
       @player.save
 
-      redirect_to("/", { :notice => "Player account updated successfully."})
+      redirect_to("/edit_player_profile", { :notice => "Player account updated successfully."})
     else
       render({ :template => "players/edit_profile_with_errors.html.erb" })
     end
