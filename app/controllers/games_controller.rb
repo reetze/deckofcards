@@ -1,5 +1,11 @@
 class GamesController < ApplicationController
   
+  def sit_down
+    @current_player.current_game_id = session.fetch(:game_id)
+    @game = Game.where({ :id => @current_player.current_game_id}).at(0)
+    render({ :template => "games/before_we_begin.html.erb" })
+  end
+
   def pre_game
     render({ :template => "games/before_we_begin.html.erb" })
   end
@@ -37,7 +43,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new
     @game.passcode = params.fetch("query_passcode")
-    @game.creator_id = session.fetch(:user_id)
+    @game.creator_id = session.fetch(:player_id)
     
     if @game.valid?
       @game.save

@@ -33,8 +33,8 @@
     <div>
       <% if session.fetch(:game_id) != @current_player.current_game_id%>
         <h4>Ready to play?</h4>
-        <form action="/join_the_game" method="post">
-          <button style = "background-color:red;">Join the room</button>
+        <form action="/take_a_seat" method="post">
+          <button style = "background-color:red; color:white;">Take a seat at the table</button>
         </form>
       <%else%>
         <h4>Who's at the table</h4>
