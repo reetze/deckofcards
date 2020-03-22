@@ -10,4 +10,9 @@
 #
 
 class Game < ApplicationRecord
+
+  def players_in
+    return Player.where({ :current_game_id => self.id})
+  end
+
 end
