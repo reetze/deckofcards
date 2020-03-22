@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # READ
   get("/games", { :controller => "games", :action => "index" })
   get("/games/:path_id", { :controller => "games", :action => "show" })
+  post("/join_game", { :controller => "games", :action => "join" })
   
   # UPDATE
   

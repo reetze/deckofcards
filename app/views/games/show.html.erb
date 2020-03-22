@@ -61,10 +61,7 @@
 
     <form action="/modify_game/<%= @game.id %>"  method="post" >
       <div class="form-group">
-        <label for="passcode_box">
-          Passcode
-        </label>
-
+        <label for="passcode_box">Passcode</label>
         <input type="text" id="passcode_box" name="query_passcode" class="form-control" value="<%= @game.passcode %>">
       </div>
 
