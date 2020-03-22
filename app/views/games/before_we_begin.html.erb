@@ -1,10 +1,52 @@
 <div class="row mb-3">
   <div class="col-md-12">
-    <h1>Before we begin...</h1>
+    <div>
+      <h1>Before we begin...</h1>
+    </div>
 
+    <br>
 
+    <h4>Instructions</h4>
+
+    <p>There is a reason this website is free and someone with limited experience could create it in a week. Follow these instructions:</p>
+
+    <ol>
+      <li>House rule: Don't be a dick. Successfully cheating is not an accomplishment.</li>
+      <li>Set your browser to auto-refresh</li>
+        <ol type = "a">
+          <li>
+            Add an auto-refresh extension to your browser (<a href="https://chrome.google.com/webstore/detail/auto-refresh/ifooldnmmcmlbdennkpdnlnbgbmfalko?hl=en" target="_blank">for Chrome users</a>)
+          </li>
+        <ol>
+    </ol>
+
+    <br>
+
+    <div>
+      <% if session.fetch(:game_id) != @current_player.current_game_id%>
+        <h4>Ready to play?</h4>
+        <form action="/join_the_game" method="post">
+          <button>Join the room</button>
+        </form>
+      <%else%>
+        <h4>Who's at the table</h4>
+          <div class="row mb-3">
+          <div class="col-md-12">
+            <table class="table">
+              <% @game.players_in.each do |player| %>
+                <tr>
+                  <td><img src="<%= player.image %>" height=100></td>
+                  <td><%=player.name%></td>
+                </tr>
+              <%end%>
+            </table>
+          </div>
+          </div>
+
+      <%end%>
+    </div>
 
   </div>
 </div>
 
-<hr>
+<br>

@@ -1,5 +1,9 @@
 class GamesController < ApplicationController
   
+  def pre_game
+    render({ :template => "games/before_we_begin.html.erb" })
+  end
+
   def join
     the_passcode = params.fetch("query_passcode")
     @game = Game.where({ :passcode => the_passcode}).at(0)
@@ -7,9 +11,9 @@ class GamesController < ApplicationController
     if @game == nil
       redirect_to("/create_or_join", { :alert => "Incorrect passcode." })
     else
-      @current_player.current_game_id = @game.id
-    
-      render({ :template => "games/before_we_begin.html.erb" })
+      session.store(:game_id, @game.id)
+
+      redirect_to("/before_we_begin")
     end
   end
   
@@ -37,7 +41,7 @@ class GamesController < ApplicationController
     
     if @game.valid?
       @game.save
-      redirect_to("/before_we_begin", { :notice => "Game created successfully." })
+      redirect_to("/before_we_begin", { :alert => "Game created successfully." })
     else
       redirect_to("/create_or_join", { :notice => "Game failed to create successfully." })
     end
