@@ -59,14 +59,15 @@
               </table>
             </div>
           </div>
-        <h4>Pick your deck</h4>
-
-          <div>
-            <p>Current image:</p>
-            <img src="<%= Card.first.back_image %>" height=200>
-          </div>
+        
 
           <%if @current_player.id == @current_game.creator_id%>
+            <h4>Pick your deck</h4>
+
+            <div>
+              <p>Current image:</p>
+              <img src="<%= Card.first.back_image %>" height=200>
+            </div>
             <form action="/change_deck_image" method="post">
               <div>
                 <label for="image_box">New image</label>
@@ -76,28 +77,34 @@
                 <button style="background-color:#5BB2D7">Update deck image</button>
               </div>
             </form>
+
+            <br>
+            <br>
+
+            <div style="">
+              <a href="/start_the_game" class="btn btn-block btn-outline-secondary" style="
+                  background-color:red;
+                  color:white;
+                  font-size:30px;">
+                The gang's all here, let's begin!
+              </a>
+            </div>
+
+            <br>
+
+            <div style="">
+              <a href="/delete_game/<%=@current_game.id%>" class="btn btn-block btn-outline-secondary" style="
+                  background-color:#BCC5C9;">
+                Never mind, delete this game.
+              </a>
+            </div>
+          <%else%>
+            <h4>The deck for this game</h4>
+
+            <div>
+              <img src="<%= Card.first.back_image %>" height=200>
+            </div>
           <%end%>
-
-          <br>
-          <br>
-
-        <div style="">
-          <a href="/start_the_game" class="btn btn-block btn-outline-secondary" style="
-              background-color:red;
-              color:white;
-              font-size:30px;">
-            The gang's all here, let's begin!
-          </a>
-        </div>
-
-        <br>
-
-        <div style="">
-          <a href="/delete_game/<%=@current_game.id%>" class="btn btn-block btn-outline-secondary" style="
-              background-color:#BCC5C9;">
-            Never mind, delete this game.
-          </a>
-        </div>
 
       <%end%>
     </div>
