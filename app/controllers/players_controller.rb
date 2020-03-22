@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  # skip_before_action(:force_player_sign_in, { :only => [:new_registration_form, :create] })
+  skip_before_action(:force_player_sign_in, { :only => [:new_registration_form, :create] })
   
   def new_registration_form
     render({ :template => "player_sessions/sign_up.html.erb" })

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action(:load_current_player)
   
-  # before_action(:force_player_sign_in)
+  before_action(:force_player_sign_in)
   
   def load_current_player
     the_id = session.fetch(:player_id)
