@@ -1,100 +1,54 @@
-<div class="row mb-3">
-  <div class="col-md-12">
-    <h1>
-      List of all games
-    </h1>
+<div class="row mb-2">
+  <div class="col-md-3">
+    <form action="/new_hand?game_id=<%= @game.id %>" method="post">
+      <button>
+        Deal New Hand
+      </button>
+    </form>
   </div>
-</div>
-
-<hr>
-
-<div class="row mb-3">
-  <div class="col-md-8 offset-md-2">
-    <h2>
-      Add a new game
-    </h2>
-
-    <form action="/insert_game" method="post">
-      <div class="form-group">
-        <label for="passcode_box">
-          Passcode
-        </label>
-
-        <input type="text" id="passcode_box" name="query_passcode" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="creator_id_box">
-          Creator
-        </label>
-
-        <input type="text" id="creator_id_box" name="query_creator_id" class="form-control">
-      </div>
-
-      <button class="btn btn-block btn-outline-secondary">
-        Create game
+  <div class="col-md-3">
+    <form action="/flop" method="post">
+      <button>
+        Flop
+      </button>
+    </form>
+  </div>
+  <div class="col-md-3">
+    <form action="/turn_river" method="post">
+      <button>
+        Turn/River
+      </button>
+    </form>
+  </div>
+  <div class="col-md-3">
+    <form action="/reveal_cards?game_id=<%= @game.id %>" method="post">
+      <button>
+        Reveal Hands
       </button>
     </form>
   </div>
 </div>
 
 <hr>
-<div class="row mb-3">
+
+<div class="row mb-5">
   <div class="col-md-12">
-    <table class="table">
-      <tr>
-        <th>
-          ID
-        </th>
+    <% @table_cards.each do |card| %>
+    <img src="<%= card.face_image %>" height="150" />
+    <% end %>
+  </div>
+</div>
 
-        <th>
-          Passcode
-        </th>
+<hr>
 
-        <th>
-          Creator
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @games.each do |game| %>
-      <tr>
-        <td>
-          <%= game.id %>
-        </td>
-
-        <td>
-          <%= game.passcode %>
-        </td>
-
-        <td>
-          <%= game.creator_id %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(game.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(game.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/games/<%= game.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+<div class="row mb-4">
+  <div class="col-md-12">
+  <%
+    @hands.each_with_index do |hand, i|
+      if @game.revealed or @player_id == @players[i].id then
+        hand.each do |card|
+  %>
+    <img src="<%= card.face_image %>" height="150" />
+  <% end end end %>
   </div>
 </div>

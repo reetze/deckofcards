@@ -50,9 +50,15 @@ class GamesController < ApplicationController
 
   def table_top
     game_id = params.fetch("game_id")
-    @game = Game.where({:id => the_id }).at(0)
-    player_id = Player.where({ :id => session.fetch(:player_id)}).at(0).id
-    @cards = Card.where.not({:deck_order => nil})
+    @game = Game.where({:id => game_id }).at(0)
+    @player_id = Player.where({ :id => session.fetch(:player_id)}).at(0).id
+    @table_cards = Card.where({:hand_player_id => 0})
+    @players = Player.where({:current_game_id => @game.id})
+    @hands = []
+
+    @players.each do |player|
+      @hands.push(Card.where({:hand_player_id => player.id}))
+    end
 
     render({ :template => "games/table_top.html.erb" })
   end

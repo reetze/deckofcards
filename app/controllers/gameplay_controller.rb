@@ -1,8 +1,8 @@
-class CardsController < ApplicationController
-  
+class GameplayController < ApplicationController
+
   def new_hand
     game_id = params.fetch("game_id")
-    game = Game.where({:id => game_id})
+    game = Game.where({:id => game_id}).at(0)
     game.revealed = false;
     game.save
 
@@ -52,7 +52,7 @@ class CardsController < ApplicationController
 
   def reveal_cards
     game_id = params.fetch("game_id")
-    game = Game.where({:id => game_id})
+    game = Game.where({:id => game_id}).at(0)
     game.revealed = true;
     game.save
   end
