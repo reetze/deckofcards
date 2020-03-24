@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   post("/flop", { :controller => "gameplay", :action => "flop"})
   post("/turn_river", { :controller => "gameplay", :action => "turn_river"})
   post("/reveal_cards", { :controller => "gameplay", :action => "reveal_cards"})
+  post("/fold", { :controller => "gameplay", :action => "fold"})
 
   # ======= Add Your Routes Above These =============
   devise_for :admin_users, ActiveAdmin::Devise.config

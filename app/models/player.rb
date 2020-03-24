@@ -4,6 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  email           :string
+#  folded          :boolean
 #  image           :string
 #  name            :string
 #  password_digest :string

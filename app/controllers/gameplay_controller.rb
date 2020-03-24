@@ -27,6 +27,8 @@ class GameplayController < ApplicationController
     top = 0
     2.times {
       players.each do |player|
+        player.folded = false
+        player.save
         deck[top].hand_player_id = player.id
         deck[top].save
         top += 1
@@ -55,6 +57,12 @@ class GameplayController < ApplicationController
     game = Game.where({:id => game_id}).at(0)
     game.revealed = true;
     game.save
+  end
+
+  def fold
+    player = Player.where({ :id => session.fetch(:player_id)}).at(0)
+    player.folded = true
+    player.save
   end
 
 end

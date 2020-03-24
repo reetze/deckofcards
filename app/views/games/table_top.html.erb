@@ -1,54 +1,85 @@
-<div class="row mb-2">
-  <div class="col-md-3">
-    <form action="/new_hand?game_id=<%= @game.id %>" method="post">
-      <button>
-        Deal New Hand
-      </button>
-    </form>
+<body style="background-color:#35654d; color:white;">
+  <div class="row mb-2">
+    <div class="col-md-3">
+      <form action="/new_hand?game_id=<%= @game.id %>" method="post">
+        <button>
+          Deal New Hand
+        </button>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <form action="/flop" method="post">
+        <button>
+          Flop
+        </button>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <form action="/turn_river" method="post">
+        <button>
+          Turn/River
+        </button>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <form action="/reveal_cards?game_id=<%= @game.id %>" method="post">
+        <button>
+          Reveal Hands
+        </button>
+      </form>
+    </div>
   </div>
-  <div class="col-md-3">
-    <form action="/flop" method="post">
-      <button>
-        Flop
-      </button>
-    </form>
-  </div>
-  <div class="col-md-3">
-    <form action="/turn_river" method="post">
-      <button>
-        Turn/River
-      </button>
-    </form>
-  </div>
-  <div class="col-md-3">
-    <form action="/reveal_cards?game_id=<%= @game.id %>" method="post">
-      <button>
-        Reveal Hands
-      </button>
-    </form>
-  </div>
-</div>
 
-<hr>
+  <hr>
 
-<div class="row mb-5">
-  <div class="col-md-12">
-    <% @table_cards.each do |card| %>
-    <img src="<%= card.face_image %>" height="150" />
-    <% end %>
+  <div class="row mb-5">
+    <div class="col-md-12">
+      <% @table_cards.each do |card| %>
+      <img src="<%= card.face_image %>" height="150" />
+      <% end %>
+    </div>
   </div>
-</div>
 
-<hr>
+  <hr>
 
-<div class="row mb-4">
-  <div class="col-md-12">
-  <%
-    @hands.each_with_index do |hand, i|
-      if @game.revealed or @player_id == @players[i].id then
+  <table>
+    <tr>
+    <%
+      @hands.each_with_index do |hand, i|
+    %>
+      <td>
+    <%
         hand.each do |card|
-  %>
-    <img src="<%= card.face_image %>" height="150" />
-  <% end end end %>
+          if @player_id == @players[i].id or (@game.revealed and not @players[i].folded)
+    %>
+        <img src="<%= card.face_image %>" height="<%= @player_id == @players[i].id ? 120 : 80 %>" />
+    <%    else %>
+        <img src="<%= card.back_image%>" height="80" style="opacity:<%= @players[i].folded ? ".4" : "1" %>;" />
+    <%
+          end
+        end
+    %>
+      </td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <% end %>
+    </tr>
+    <tr>
+    <% @players.each do |player| %>
+      <td><%= player.name %></td>
+      <td></td>
+    <% end %>
+    </tr>
+  </table>
+
+  <hr>
+
+  <div class="row mb-2">
+    <div class="col-md-12">
+      <form action="/fold" method="post">
+        <button>
+          Fold
+        </button>
+      </form>
+    </div>
   </div>
-</div>
+</body>
