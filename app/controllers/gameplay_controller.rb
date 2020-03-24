@@ -38,6 +38,10 @@ class GameplayController < ApplicationController
   end
 
   def flop
+    if Card.where(:hand_player_id => 0).length() != 0
+      return
+    end
+
     deck = Card.where(:hand_player_id => nil).order(:deck_order)
 
     3.times { |top|
@@ -47,6 +51,11 @@ class GameplayController < ApplicationController
   end
 
   def turn_river
+    table_cards = Card.where(:hand_player_id => 0).length()
+    if table_cards > 4 or table_cards < 3
+      return
+    end
+
     top_card = Card.where(:hand_player_id => nil).order(:deck_order).at(0)
     top_card.hand_player_id = 0
     top_card.save
