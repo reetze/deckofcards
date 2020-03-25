@@ -62,6 +62,10 @@ class GameplayController < ApplicationController
   end
 
   def reveal_cards
+    if Card.where(:hand_player_id => 0).length() != 5
+      return
+    end
+
     game_id = params.fetch("game_id")
     game = Game.where({:id => game_id}).at(0)
     game.revealed = true;

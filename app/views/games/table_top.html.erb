@@ -8,6 +8,7 @@
         </button>
       </form>
     </div>
+    <% if @table_cards.length() == 0 %>
     <div class="col-md-3">
       <form action="/flop" method="post">
         <button>
@@ -15,6 +16,8 @@
         </button>
       </form>
     </div>
+    <% end %>
+    <% if @table_cards.length() > 2 and @table_cards.length() < 5 %>
     <div class="col-md-3">
       <form action="/turn_river" method="post">
         <button>
@@ -22,13 +25,17 @@
         </button>
       </form>
     </div>
+    <% end %>
+    <% if @table_cards.length() == 5 %>
     <div class="col-md-3">
-      <form action="/reveal_cards?game_id=<%= @game.id %>" method="post">
+      <form action="/reveal_cards?game_id=<%= @game.id %>" method="post"
+        onsubmit="return confirm('Is everyone done betting and squared away?');">
         <button>
-          Reveal Hands
+          Reveal Remaining Hands
         </button>
       </form>
     </div>
+    <% end %>
   </div>
 
   <hr>
@@ -53,7 +60,8 @@
         hand.each do |card|
           if @player_id == @players[i].id or (@game.revealed and not @players[i].folded)
     %>
-        <img src="<%= card.face_image %>" height="<%= @player_id == @players[i].id ? 120 : 80 %>" />
+        <img src="<%= card.face_image %>" height="<%= @player_id == @players[i].id ? 120 : 80 %>"
+          style="opacity:<%= @players[i].folded ? ".4" : "1" %>;" />
     <%    else %>
         <img src="<%= card.back_image%>" height="80" style="opacity:<%= @players[i].folded ? ".4" : "1" %>;" />
     <%
