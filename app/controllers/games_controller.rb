@@ -2,7 +2,20 @@ class GamesController < ApplicationController
   
   def sit_down
     @current_player = Player.where({ :id => session.fetch(:player_id)}).at(0)
-    @current_player.current_game_id = session.fetch(:game_id)
+    game_id = session.fetch(:game_id)
+    @current_player.current_game_id = game_id
+
+    #Find an open seat for the player
+    occupied_seats = Player.select(:seat).where(:current_game_id => game_id).map { |p| p.seat }
+    empty_seats = []
+    10.times { |i|
+      if !occupied_seats.include? (i + 1)
+        empty_seats.push(i + 1)
+      end
+    }
+    @current_player.seat = empty_seats[rand(empty_seats.length)]
+    #Player seated at open seat
+
     @current_player.save
     
     redirect_to("/before_we_begin")
@@ -53,7 +66,7 @@ class GamesController < ApplicationController
     @game = Game.where({:id => game_id }).at(0)
     @player_id = Player.where({ :id => session.fetch(:player_id)}).at(0).id
     @table_cards = Card.where({:hand_player_id => 0}).order(:deck_order)
-    @players = Player.where({:current_game_id => @game.id})
+    @players = Player.where({:current_game_id => @game.id}).order(:seat)
     @hands = []
 
     @players.each do |player|

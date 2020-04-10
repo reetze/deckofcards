@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_020105) do
+ActiveRecord::Schema.define(version: 2020_04_10_182426) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_020105) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "current_game_id"
     t.boolean "folded"
+    t.integer "seat"
   end
 
 end

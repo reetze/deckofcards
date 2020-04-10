@@ -8,6 +8,7 @@
 #  image           :string
 #  name            :string
 #  password_digest :string
+#  seat            :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  current_game_id :integer
