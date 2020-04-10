@@ -10,12 +10,12 @@ class GameplayController < ApplicationController
     a = *(1..52)
     b = []
     52.times { |i|
-      b.push(a.delete_at(rand(53-i)))
+      b.push(a.delete_at(rand(52-i)))
     }
 
     Card.all.each do |the_card|
       the_card.hand_player_id = nil
-      the_card.deck_order = b[the_card.id]
+      the_card.deck_order = b[the_card.id-1]
       the_card.save
     end
     # Cards shuffled
