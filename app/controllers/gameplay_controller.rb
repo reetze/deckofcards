@@ -14,7 +14,7 @@ class GameplayController < ApplicationController
     end
   end
 
-  def GameplayController.deal
+  def GameplayController.deal(game_id)
     deck = Card.order(:deck_order)
     players = Player.where({ :current_game_id => game_id})
 
@@ -37,7 +37,7 @@ class GameplayController < ApplicationController
     game.save
 
     GameplayController.shuffle
-    GameplayController.deal
+    GameplayController.deal(game_id)
   end
 
   def flop
@@ -104,13 +104,11 @@ class GameplayController < ApplicationController
   end
 
   def fold
-=begin
     player = Player.where({ :id => session.fetch(:player_id)}).at(0)
     game = Game.where({ :id => player.current_game_id}).at(0)
-    if player.seat != game.action_on
-      return
-    end
-=end
+    # if player.seat != game.action_on
+    #   return
+    # end
 
     player.folded = true
     player.save
