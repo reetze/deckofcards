@@ -52,7 +52,7 @@ class GamesController < ApplicationController
     game_id = params.fetch("game_id")
     @game = Game.where({:id => game_id }).at(0)
     @player_id = Player.where({ :id => session.fetch(:player_id)}).at(0).id
-    @table_cards = Card.where({:hand_player_id => 0})
+    @table_cards = Card.where({:hand_player_id => 0}).order(:deck_order)
     @players = Player.where({:current_game_id => @game.id})
     @hands = []
 
