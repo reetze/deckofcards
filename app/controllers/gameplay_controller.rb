@@ -10,7 +10,7 @@ class GameplayController < ApplicationController
     a = *(1..52)
     b = []
     52.times { |i|
-      b.push(a.delete_at(rand(52-i)))
+      b.push(a.delete_at(rand(53-i)))
     }
 
     Card.all.each do |the_card|
