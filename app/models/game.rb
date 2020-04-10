@@ -3,6 +3,7 @@
 # Table name: games
 #
 #  id         :integer          not null, primary key
+#  action_on  :integer
 #  passcode   :string
 #  revealed   :boolean
 #  created_at :datetime         not null

@@ -48,6 +48,19 @@ class GamesController < ApplicationController
     render({ :template => "games/create_or_join.html.erb" })
   end
   
+  def begin_play
+    game_id = params.fetch("game_id")
+
+    game = Game.where({:id => game_id }).at(0)
+    if game.action_on == nil
+      occupied_seats = Player.select(:seat).where(:current_game_id => game_id).map { |p| p.seat }
+      game.action_on = occupied_seats[rand(occupied_seats.length)]
+      game.save
+    end
+
+    redirect_to("/table_top/" + game_id.to_s)
+  end
+
   def index
     @games = Game.all.order({ :created_at => :desc })
 
@@ -64,7 +77,7 @@ class GamesController < ApplicationController
   def table_top
     game_id = params.fetch("game_id")
     @game = Game.where({:id => game_id }).at(0)
-    @player_id = Player.where({ :id => session.fetch(:player_id)}).at(0).id
+    @player = Player.where({ :id => session.fetch(:player_id)}).at(0)
     @table_cards = Card.where({:hand_player_id => 0}).order(:deck_order)
     @players = Player.where({:current_game_id => @game.id}).order(:seat)
     @hands = []

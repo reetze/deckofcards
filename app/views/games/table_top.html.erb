@@ -56,9 +56,9 @@
       <td>
     <%
         hand.each do |card|
-          if @player_id == @players[i].id or (@game.revealed and not @players[i].folded)
+          if @player.id == @players[i].id or (@game.revealed and not @players[i].folded)
     %>
-        <img src="<%= card.face_image %>" height="<%= @player_id == @players[i].id ? 120 : 80 %>"
+        <img src="<%= card.face_image %>" height="<%= @player.id == @players[i].id ? 120 : 80 %>"
           style="opacity:<%= @players[i].folded ? ".4" : "1" %>;" />
     <%    else %>
         <img src="<%= card.back_image%>" height="80" style="opacity:<%= @players[i].folded ? ".4" : "1" %>;" />
@@ -78,6 +78,7 @@
     </tr>
   </table>
 
+  <!% if @game.action_on == @player.seat %>
   <hr>
 
   <div class="row mb-2">
@@ -89,4 +90,5 @@
       </form>
     </div>
   </div>
+  <!% end %>
 </body>

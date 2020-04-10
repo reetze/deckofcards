@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get("/games/:path_id", { :controller => "games", :action => "show" })
   post("/join_game", { :controller => "games", :action => "join" })
   get("/before_we_begin", { :controller => "games", :action => "pre_game" })
+  get("/begin_play/:game_id", { :controller => "games", :action => "begin_play"})
   get("/table_top/:game_id", { :controller => "games", :action => "table_top"})
   
   # UPDATE
