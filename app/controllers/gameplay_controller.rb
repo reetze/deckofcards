@@ -1,12 +1,6 @@
 class GameplayController < ApplicationController
 
-  def new_hand
-    game_id = params.fetch("game_id")
-    game = Game.where({:id => game_id}).at(0)
-    game.revealed = false;
-    game.save
-
-    # Shuffle the cards
+  def GameplayController.shuffle
     a = *(1..52)
     b = []
     52.times { |i|
@@ -18,12 +12,12 @@ class GameplayController < ApplicationController
       the_card.deck_order = b[the_card.id-1]
       the_card.save
     end
-    # Cards shuffled
+  end
 
+  def GameplayController.deal
     deck = Card.order(:deck_order)
     players = Player.where({ :current_game_id => game_id})
 
-    # Deal 2 cards to each player
     top = 0
     2.times {
       players.each do |player|
@@ -34,7 +28,16 @@ class GameplayController < ApplicationController
         top += 1
       end
     }
-    # Cards dealt
+  end
+
+  def new_hand
+    game_id = params.fetch("game_id")
+    game = Game.where({:id => game_id}).at(0)
+    game.revealed = false;
+    game.save
+
+    GameplayController.shuffle
+    GameplayController.deal
   end
 
   def flop
@@ -68,10 +71,51 @@ class GameplayController < ApplicationController
     game.save
   end
 
-  def fold
+  def check
     player = Player.where({ :id => session.fetch(:player_id)}).at(0)
+    game = Game.where({ :id => player.current_game_id}).at(0)
+    if player.seat != game.action_on
+      return
+    end
+
+    #TODO: Validate player has commited sufficient chips
+
+    game.advanceAction
+  end
+
+  def call
+    player = Player.where({ :id => session.fetch(:player_id)}).at(0)
+    game = Game.where({ :id => player.current_game_id}).at(0)
+    if player.seat != game.action_on
+      return
+    end
+
+    game.advanceAction
+  end
+
+  def raise
+    player = Player.where({ :id => session.fetch(:player_id)}).at(0)
+    game = Game.where({ :id => player.current_game_id}).at(0)
+    if player.seat != game.action_on
+      return
+    end
+
+    game.advanceAction
+  end
+
+  def fold
+=begin
+    player = Player.where({ :id => session.fetch(:player_id)}).at(0)
+    game = Game.where({ :id => player.current_game_id}).at(0)
+    if player.seat != game.action_on
+      return
+    end
+=end
+
     player.folded = true
     player.save
+
+    game.advanceAction
   end
 
 end

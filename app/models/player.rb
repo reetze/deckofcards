@@ -3,6 +3,7 @@
 # Table name: players
 #
 #  id              :integer          not null, primary key
+#  chip_count      :integer
 #  email           :string
 #  folded          :boolean
 #  image           :string
