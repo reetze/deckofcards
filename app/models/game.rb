@@ -4,6 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  action_on  :integer
+#  dealer     :integer
 #  passcode   :string
 #  pot        :integer
 #  revealed   :boolean

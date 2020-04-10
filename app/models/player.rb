@@ -4,6 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  chip_count      :integer
+#  current_bet     :integer
 #  email           :string
 #  folded          :boolean
 #  image           :string
