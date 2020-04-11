@@ -55,6 +55,7 @@ class GamesController < ApplicationController
     if game.action_on == nil
       occupied_seats = Player.select(:seat).where(:current_game_id => game_id).map { |p| p.seat }
       game.action_on = occupied_seats[rand(occupied_seats.length)]
+      game.dealer = game.action_on
       game.save
     end
 

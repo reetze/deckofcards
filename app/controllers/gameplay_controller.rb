@@ -30,6 +30,30 @@ class GameplayController < ApplicationController
     }
   end
 
+  def GameplayController.blinds(game)
+    occupied_seats = Player.select(:seat).where(:current_game_id => game.id).order(:seat).map { |p| p.seat }
+    dealer_index = occupied_seats.index(game.dealer)
+    small_blind = occupied_seats.length-1 == dealer_index ? occupied_seats[0] : occupied_seats[dealer_index+1]
+    small_blind_index = occupied_seats.index(small_blind)
+    big_blind = occupied_seats.length-1 == small_blind_index ? occupied_seats[0] : occupied_seats[small_blind_index+1]
+    big_blind_index = occupied_seats.index(big_blind)
+    under_the_gun = occupied_seats.length-1 == big_blind_index ? occupied_seats[0] : occupied_seats[big_blind_index+1]
+
+    small_blind_player = Player.where(:seat => small_blind).where(:current_game_id => game.id).at(0)
+    small_blind_player.current_bet = [small_blind_player.chip_count, 10*(2**game.blinds_level)].min
+    small_blind_player.chip_count -= small_blind_player.current_bet
+    small_blind_player.save
+
+    big_blind_player = Player.where(:seat => big_blind).where(:current_game_id => game.id).at(0)
+    big_blind_player.current_bet = [big_blind_player.chip_count, 20*(2**game.blinds_level)].min
+    big_blind_player.chip_count -= big_blind_player.current_bet
+    big_blind_player.save
+
+    game.pot = small_blind_player.current_bet + big_blind_player.current_bet
+    game.action_on = under_the_gun
+    game.save
+  end
+
   def new_hand
     game_id = params.fetch("game_id")
     game = Game.where({:id => game_id}).at(0)
@@ -38,6 +62,7 @@ class GameplayController < ApplicationController
 
     GameplayController.shuffle
     GameplayController.deal(game_id)
+    GameplayController.blinds(game)
   end
 
   def flop
@@ -90,6 +115,12 @@ class GameplayController < ApplicationController
       return
     end
 
+    max_bet = Player.where({ :current_game_id => game.id}).select(:current_bet).map { |p| p.current_bet }.max
+    amount_to_call = max_bet - player.current_bet
+    player.chip_count -= amount_to_call
+    player.current_bet = max_bet
+    player.save
+
     game.advanceAction
   end
 
@@ -106,14 +137,14 @@ class GameplayController < ApplicationController
   def fold
     player = Player.where({ :id => session.fetch(:player_id)}).at(0)
     game = Game.where({ :id => player.current_game_id}).at(0)
-    # if player.seat != game.action_on
-    #   return
-    # end
+    if player.seat != game.action_on
+      return
+    end
+
+    game.advanceAction # Do this first so that current player isn't folded yet.
 
     player.folded = true
     player.save
-
-    game.advanceAction
   end
 
 end

@@ -2,15 +2,16 @@
 #
 # Table name: games
 #
-#  id         :integer          not null, primary key
-#  action_on  :integer
-#  dealer     :integer
-#  passcode   :string
-#  pot        :integer
-#  revealed   :boolean
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  creator_id :integer
+#  id           :integer          not null, primary key
+#  action_on    :integer
+#  blinds_level :integer
+#  dealer       :integer
+#  passcode     :string
+#  pot          :integer
+#  revealed     :boolean
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  creator_id   :integer
 #
 
 class Game < ApplicationRecord

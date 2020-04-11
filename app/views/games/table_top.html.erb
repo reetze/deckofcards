@@ -39,16 +39,25 @@
   <hr>
 
   <div class="row mb-5">
-    <div class="col-md-12">
+    <div class="col-md-9">
       <% @table_cards.each do |card| %>
       <img src="<%= card.face_image %>" height="150" />
       <% end %>
+    </div>
+    <div class="col-md-3">
+      <span style="font-size:24pt;">POT: <%= @game.pot %></span>
     </div>
   </div>
 
   <hr>
 
   <table>
+    <tr>
+    <% @players.each do |player| %>
+      <td style="text-align:center;"><%= player.current_bet %></td>
+      <td></td>
+    <% end %>
+    </tr>
     <tr>
     <%
       @hands.each_with_index do |hand, i|
@@ -72,7 +81,15 @@
     </tr>
     <tr>
     <% @players.each do |player| %>
-      <td style="text-align:center;border:<%= player.seat == @game.action_on ? '1' : '0' %>px solid;"><%= player.name %></td>
+      <td style="text-align:center;border:<%= player.seat == @game.action_on ? '2' : '0' %>px solid;">
+        <%= player.seat == @game.dealer ? 'D - ' : '' %><%= player.name %>
+      </td>
+      <td></td>
+    <% end %>
+    </tr>
+    <tr>
+    <% @players.each do |player| %>
+      <td style="text-align:center;"><%= player.chip_count %></td>
       <td></td>
     <% end %>
     </tr>
@@ -90,7 +107,7 @@
       </form>
     </div>
     <div class="col-md-3">
-      <form action="/fold" method="post" onsubmit="return confirm('Are you sure you want to fold?');">
+      <form action="/call" method="post">
         <button>
           Call
         </button>
@@ -98,6 +115,7 @@
     </div>
     <div class="col-md-3">
       <form action="/fold" method="post" onsubmit="return confirm('Are you sure you want to fold?');">
+        <input type="number" name="bet_amount" />
         <button>
           Raise
         </button>
