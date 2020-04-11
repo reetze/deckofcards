@@ -95,12 +95,12 @@
     </tr>
   </table>
 
-  <!% if @game.action_on == @player.seat %>
+  <% if @game.action_on == @player.seat %>
   <hr>
 
   <div class="row mb-2">
     <div class="col-md-3">
-      <form action="/fold" method="post" onsubmit="return confirm('Are you sure you want to fold?');">
+      <form action="/check" method="post">
         <button>
           Check
         </button>
@@ -114,7 +114,7 @@
       </form>
     </div>
     <div class="col-md-3">
-      <form action="/fold" method="post" onsubmit="return confirm('Are you sure you want to fold?');">
+      <form action="/raise" method="post">
         <input type="number" name="bet_amount" />
         <button>
           Raise
@@ -129,5 +129,5 @@
       </form>
     </div>
   </div>
-  <!% end %>
+  <% end %>
 </body>

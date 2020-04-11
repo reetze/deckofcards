@@ -103,7 +103,10 @@ class GameplayController < ApplicationController
       return
     end
 
-    #TODO: Validate player has commited sufficient chips
+    max_bet = Player.where({ :current_game_id => game.id}).select(:current_bet).map { |p| p.current_bet }.max
+    if max_bet != player.current_bet
+      return
+    end
 
     game.advanceAction
   end
@@ -131,6 +134,12 @@ class GameplayController < ApplicationController
       return
     end
 
+    bet_amount = params.fetch("bet_amount")
+    player.current_bet+ = bet_amount
+    player.chip_count -= bet_amount
+    player.save
+
+    game.pot += bet_amount
     game.advanceAction
   end
 
