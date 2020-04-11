@@ -157,12 +157,14 @@ class GameplayController < ApplicationController
       return
     end
 
-    bet_amount = params.fetch("bet_amount")
-    player.current_bet += bet_amount
-    player.chip_count -= bet_amount
+    bet_amount = params.fetch("bet_amount").to_i
+    max_bet = Player.where({ :current_game_id => game.id}).select(:current_bet).map { |p| p.current_bet }.max
+    amount_to_add = max_bet + bet_amount - player.current_bet
+    player.current_bet += amount_to_add
+    player.chip_count -= amount_to_add
     player.save
 
-    game.pot += bet_amount
+    game.pot += amount_to_add
     game.advanceAction
   end
 
