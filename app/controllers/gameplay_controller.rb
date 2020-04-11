@@ -108,7 +108,18 @@ class GameplayController < ApplicationController
       return
     end
 
-    game.advanceAction
+    occupied_seats = Player.select(:seat).where(:current_game_id => game.id).order(:seat).map { |p| p.seat }
+    dealer_index = occupied_seats.index(game.dealer)
+    small_blind = occupied_seats.length-1 == dealer_index ? occupied_seats[0] : occupied_seats[dealer_index+1]
+    small_blind_index = occupied_seats.index(small_blind)
+    big_blind = occupied_seats.length-1 == small_blind_index ? occupied_seats[0] : occupied_seats[small_blind_index+1]
+    if (big_blind == player.seat and Card.where({:hand_player_id => 0}).length == 0) or (game.dealer == player.seat and Card.where({:hand_player_id => 0}).length.between?(3,4))
+      game.advanceBoard
+    elsif game.dealer == player.seat and Card.where({:hand_player_id => 0}).length == 5
+      game.advanceHand
+    else
+      game.advanceAction
+    end
   end
 
   def call
@@ -124,7 +135,19 @@ class GameplayController < ApplicationController
     player.current_bet = max_bet
     player.save
 
-    game.advanceAction
+    game.pot += amount_to_call
+
+    players_remaining = Player.where({ :current_game_id => game.id}).where({:folded => false}).length
+    players_at_max_bet = Player.where({ :current_game_id => game.id}).where({:current_bet => max_bet}).length
+    if players_remaining == players_at_max_bet
+      if Card.where({:hand_player_id => 0}).length == 5
+        game.advanceHand
+      else
+        game.advanceBoard
+      end
+    else
+      game.advanceAction
+    end
   end
 
   def raise
@@ -135,7 +158,7 @@ class GameplayController < ApplicationController
     end
 
     bet_amount = params.fetch("bet_amount")
-    player.current_bet+ = bet_amount
+    player.current_bet += bet_amount
     player.chip_count -= bet_amount
     player.save
 
