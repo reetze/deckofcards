@@ -140,9 +140,10 @@ class GameplayController < ApplicationController
     players_remaining = Player.where({ :current_game_id => game.id}).where({:folded => false}).length
     players_at_max_bet = Player.where({ :current_game_id => game.id}).where({:current_bet => max_bet}).length
     if players_remaining == players_at_max_bet
-      if Card.where({:hand_player_id => 0}).length == 5
+      table_cards = Card.where({:hand_player_id => 0}).length
+      if table_cards == 5
         game.advanceHand
-      else
+      elsif table_cards > 0 or player.current_bet > 20*(2**game.blinds_level)
         game.advanceBoard
       end
     else

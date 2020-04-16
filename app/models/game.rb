@@ -55,14 +55,16 @@ class Game < ApplicationRecord
   end
 
   def advanceBoard
-    Players.where({:current_game_id => self.id}).each do |player|
+    Player.where({:current_game_id => self.id}).each do |player|
       if player.current_bet != 0
         player.current_bet = 0
         player.save
       end
     end
 
-    self.action_on = self.dealer
+    occupied_seats = Player.select(:seat).where(:current_game_id => self.id).order(:seat).map { |p| p.seat }
+    dealer_index = occupied_seats.index(self.dealer)
+    self.action_on = occupied_seats.length-1 == dealer_index ? occupied_seats[0] : occupied_seats[dealer_index+1]
     board_count = Card.where(:hand_player_id => 0).length()
     if board_count == 0
       self.flop
@@ -72,15 +74,20 @@ class Game < ApplicationRecord
   end
 
   def advanceHand
-    occupied_seats = Player.select(:seat).where(:current_game_id => game.id).order(:seat).map { |p| p.seat }
-    dealer_index = occupied_seats.index(game.dealer)
+    occupied_seats = Player.select(:seat).where(:current_game_id => self.id).order(:seat).map { |p| p.seat }
+    dealer_index = occupied_seats.index(self.dealer)
     self.dealer = occupied_seats.length-1 == dealer_index ? occupied_seats[0] : occupied_seats[dealer_index+1]
 
     multiple_players = Player.where({:current_game_id => self.id, :folded => false}).length > 1
-    self.adjustChipCounts(multiple_players)
     if multiple_players
+      if Card.where(:hand_player_id => 0).length() < 5
+        return
+      end
+
       self.revealed = true;
+      self.adjustChipCounts(multiple_players)
     else
+      self.adjustChipCounts(multiple_players)
       #deal new hand
     end
 
@@ -108,7 +115,83 @@ class Game < ApplicationRecord
     self.pot = 0
   end
 
+  def extract_flush(hand)
+
+  end
+
+  def extract_matches(hand)
+
+  end
+
+  def extract_rest(hand)
+
+  end
+
+  def four_of_kind(hand)
+
+  end
+
+  def full_house(hand)
+
+  end
+
+  def top_of_straight(hand)
+
+  end
+
+  def top_cards(hand)
+
+  end
+
+  def top_card(hand)
+
+  end
+
+  def evaluate(hand)
+    flush_cards = self.extract_flush(hand)
+    matched_cards = nil
+    unmatched_cards = nil
+
+    if flush_cards.length() > 0
+      top_card = self.top_of_straight(flush_cards)
+      if top_card > 0
+        return 1500 + top_card
+      end
+
+      return 700 + self.top_cards(flush_cards)
+    else
+      matched_cards = self.extract_matches(hand)
+      unmatched_cards = self.extract_rest(hand)
+    end
+
+    four_of_kind_value = self.four_of_kind(matched_cards)
+    if four_of_kind_value > 0
+      return 1200 + four_of_kind_value * 14 + self.top_card(unmatched_cards)
+    end
+
+    full_house_value = self.full_house(matched_cards)
+    if full_house_value
+      return 900 + full_house_value
+    end
+
+    top_card = self.top_of_straight(hand)
+    if top_card > 0
+      return 800 + top_card
+    end
+  end
+
   def determine_winner
+    players = Player.where({:current_game_id => self.id, :folded => false})
+    hands = []
+
+    players.each do |player|
+      hands.push(Card.where({:hand_player_id => player.id}))
+    end
+
+    hands.map { |hand| self.evaluate(hand) }
+    winning_index = hands.index(hands.max)
+
+    return players.at(winning_index)
   end
 
   def createdby
